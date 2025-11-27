@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Aportaciones</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f5f5f5;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      margin: 0 auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e9f7ef;
+      border-left: 4px solid #2ecc71;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Calculadora de Aportaciones</h2>
+
+    <label>Ingreso de Miguel (€)</label>
+    <input type="number" id="ingMiguel" value="2300" />
+
+    <label>Ingreso de Claudia (€)</label>
+    <input type="number" id="ingClaudia" value="2000" />
+
+    <label>Gasto total mensual (€)</label>
+    <input type="number" id="gasto" value="1700" />
+
+    <button onclick="calcular()">Calcular aportaciones</button>
+
+    <div class="result" id="resultado" style="display:none"></div>
+  </div>
+
+  <script>
+    function calcular() {
+      let ingMiguel = parseFloat(document.getElementById('ingMiguel').value);
+      let ingClaudia = parseFloat(document.getElementById('ingClaudia').value);
+      let gasto = parseFloat(document.getElementById('gasto').value);
+
+      let total = ingMiguel + ingClaudia;
+      let propMiguel = ingMiguel / total;
+      let propClaudia = ingClaudia / total;
+
+      let aportMiguel = gasto * propMiguel;
+      let aportClaudia = gasto * propClaudia;
+
+      document.getElementById('resultado').style.display = 'block';
+      document.getElementById('resultado').innerHTML = `
+        <strong>Aportaciones mensuales:</strong><br><br>
+        Miguel aporta: <strong>${aportMiguel.toFixed(2)} €</strong> (${(propMiguel*100).toFixed(1)}%)<br>
+        Claudia aporta: <strong>${aportClaudia.toFixed(2)} €</strong> (${(propClaudia*100).toFixed(1)}%)
+      `;
+    }
+  </script>
+</body>
+</html>
