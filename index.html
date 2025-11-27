@@ -61,6 +61,9 @@
     <label>Gasto total mensual (€)</label>
     <input type="number" id="gasto" value="1700" />
 
+    <label>Número de vuelos este mes</label>
+    <input type="number" id="numVuelos" value="0" />
+
     <button onclick="calcular()">Calcular aportaciones</button>
 
     <div class="result" id="resultado" style="display:none"></div>
@@ -71,19 +74,25 @@
       let ingMiguel = parseFloat(document.getElementById('ingMiguel').value);
       let ingClaudia = parseFloat(document.getElementById('ingClaudia').value);
       let gasto = parseFloat(document.getElementById('gasto').value);
+      let numVuelos = parseInt(document.getElementById('numVuelos').value);
+
+      // Supongamos que cada vuelo cuesta aprox 25€ de comida fuera
+      let descuentoClaudia = numVuelos * 25;
+      let gastoAjustado = gasto - descuentoClaudia;
 
       let total = ingMiguel + ingClaudia;
       let propMiguel = ingMiguel / total;
       let propClaudia = ingClaudia / total;
 
-      let aportMiguel = gasto * propMiguel;
-      let aportClaudia = gasto * propClaudia;
+      let aportMiguel = gastoAjustado * propMiguel;
+      let aportClaudia = gastoAjustado * propClaudia;
 
       document.getElementById('resultado').style.display = 'block';
       document.getElementById('resultado').innerHTML = `
         <strong>Aportaciones mensuales:</strong><br><br>
         Miguel aporta: <strong>${aportMiguel.toFixed(2)} €</strong> (${(propMiguel*100).toFixed(1)}%)<br>
-        Claudia aporta: <strong>${aportClaudia.toFixed(2)} €</strong> (${(propClaudia*100).toFixed(1)}%)
+        Claudia aporta: <strong>${aportClaudia.toFixed(2)} €</strong> (${(propClaudia*100).toFixed(1)}%)<br>
+        <em>Se descontó ${descuentoClaudia.toFixed(2)} € por comidas fuera de casa.</em>
       `;
     }
   </script>
